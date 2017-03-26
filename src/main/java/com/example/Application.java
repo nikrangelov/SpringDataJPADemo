@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.dao.AuthorDao;
+import com.example.dao.BookDao;
+import com.example.domain.Author;
+import com.example.domain.Book;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -64,17 +68,19 @@ public class Application {
 		AbstractApplicationContext context = new AnnotationConfigApplicationContext(
 				Application.class);
 
-		CustomerDao repository = context.getBean(CustomerDao.class);
-
+		CustomerDao repositoryCustomer = context.getBean(CustomerDao.class);
+		AuthorDao repositoryAuthor = context.getBean(AuthorDao.class);
+		BookDao repositoryBook = context.getBean(BookDao.class);
+		/*
 		// save a couple of customers
-		repository.save(new Customer("Jack", "Bauer"));
-		repository.save(new Customer("Chloe", "O'Brian"));
-		repository.save(new Customer("Kim", "Bauer"));
-		repository.save(new Customer("David", "Palmer"));
-		repository.save(new Customer("Michelle", "Dessler"));
+		repositoryCustomer.save(new Customer("Jack", "Bauer"));
+		repositoryCustomer.save(new Customer("Chloe", "O'Brian"));
+		repositoryCustomer.save(new Customer("Kim", "Bauer"));
+		repositoryCustomer.save(new Customer("David", "Palmer"));
+		repositoryCustomer.save(new Customer("Michelle", "Dessler"));
 
 		// fetch all customers
-		Iterable<Customer> customers = repository.findAll();
+		Iterable<Customer> customers = repositoryCustomer.findAll();
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");
 		for (Customer customer : customers) {
@@ -83,19 +89,33 @@ public class Application {
 		System.out.println();
 
 		// fetch an individual customer by ID
-		Customer customer = repository.findOne(1L);
+		Customer customer = repositoryCustomer.findOne(1L);
 		System.out.println("Customer found with findOne(1L):");
 		System.out.println("--------------------------------");
 		System.out.println(customer);
 		System.out.println();
 
 		// fetch customers by last name
-		List<Customer> bauers = repository.findByLastName("Bauer");
+		List<Customer> bauers = repositoryCustomer.findByLastName("Bauer");
 		System.out.println("Customer found with findByLastName('Bauer'):");
 		System.out.println("--------------------------------------------");
 		for (Customer bauer : bauers) {
 			System.out.println(bauer);
 		}
+
+		*/
+
+		Author author = new Author();
+		author.setFirstName("Ivan");
+		author.setLastName("Vazov");
+
+		Book book = new Book();
+		book.setAuthor(author);
+		book.setTitle("Pod igoto");
+
+		author.addBook(book);
+
+		repositoryAuthor.save(author);
 
 		context.close();
 	}
