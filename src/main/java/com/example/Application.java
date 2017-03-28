@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.config.SpringDataConfig;
 import com.example.dao.AuthorDao;
 import com.example.dao.BookDao;
 import com.example.domain.Author;
@@ -28,7 +29,7 @@ import com.example.domain.Customer;
 @Configuration
 @EnableJpaRepositories
 public class Application {
-
+	/*
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource datasource = new DriverManagerDataSource();
@@ -62,11 +63,12 @@ public class Application {
 	public PlatformTransactionManager transactionManager() {
 		return new JpaTransactionManager();
 	}
+	*/
+
 
 	public static void main(String[] args) {
 
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext(
-				Application.class);
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(SpringDataConfig.class);
 
 		CustomerDao repositoryCustomer = context.getBean(CustomerDao.class);
 		AuthorDao repositoryAuthor = context.getBean(AuthorDao.class);
@@ -104,7 +106,7 @@ public class Application {
 		}
 
 		*/
-
+		/*
 		Author author = new Author();
 		author.setFirstName("Ivan");
 		author.setLastName("Vazov");
@@ -117,6 +119,14 @@ public class Application {
 
 		repositoryAuthor.save(author);
 
+		//List<Author> allAuthors = repositoryAuthor.findAll();
+		Long count = repositoryAuthor.count();
+		count = repositoryAuthor.countByLastName("Vazov");
+
+		Author author1 = repositoryAuthor.findOne(1L);
+		repositoryAuthor.delete(author1);
+		boolean isInDatabase = repositoryAuthor.exists(1L);
+		*/
 		context.close();
 	}
 

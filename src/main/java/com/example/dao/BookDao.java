@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.domain.Book;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
  */
 
 @PersistenceContext(unitName = "adminEntityManagerFactory")
+@Repository
 public interface BookDao extends CrudRepository<Book, Long> {
     List<Book> findByTitle(String title);
+    Book findById(long id);
 }
