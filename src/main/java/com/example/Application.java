@@ -119,7 +119,7 @@ public class Application {
 
 		repositoryAuthor.save(author);
 
-		//List<Author> allAuthors = repositoryAuthor.findAll();
+		List<Author> allAuthors = repositoryAuthor.findAll();
 		Long count = repositoryAuthor.count();
 		count = repositoryAuthor.countByLastName("Vazov");
 
@@ -127,6 +127,31 @@ public class Application {
 		repositoryAuthor.delete(author1);
 		boolean isInDatabase = repositoryAuthor.exists(1L);
 		*/
+		//repositoryAuthor.
+		for(int i = 0; i < 10; i++){
+			Author a = new Author();
+			a.setFirstName("Author " + i);
+			a.setLastName("Idk");
+
+			Book b1 = new Book();
+			b1.setTitle("Book" + i*2);
+			b1.setAuthor(a);
+
+			Book b2 = new Book();
+			b2.setTitle("Book" + i*2+1);
+			b2.setAuthor(a);
+
+			a.addBook(b1);
+			a.addBook(b2);
+
+			repositoryAuthor.save(a);
+		}
+
+		for(Author a: repositoryAuthor.findTop5ByLastName("Idk")){
+			System.out.println(a.toString());
+		}
+
+
 		context.close();
 	}
 
